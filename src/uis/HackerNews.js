@@ -1,6 +1,7 @@
 import { debounce } from "lodash";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { handleFetchNews } from "../redux-thunk/newsSlice";
 import { getNews, setQuery } from "../sagas/news/newsSlice";
 
 const HackerNews = () => {
@@ -8,8 +9,11 @@ const HackerNews = () => {
     (state) => state.news
   );
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getNews(query));
+  // }, [dispatch, query]);
   useEffect(() => {
-    dispatch(getNews(query));
+    dispatch(handleFetchNews("css"));
   }, [dispatch, query]);
   const handleChangeQuery = debounce((e) => {
     dispatch(setQuery(e.target.value));
@@ -21,8 +25,8 @@ const HackerNews = () => {
           type="text"
           className="block w-full p-5 transition-all border border-gray-200 rounded-md focus:border-blue-400"
           placeholder="Typing your keyword..."
-          defaultValue={query}
-          onChange={handleChangeQuery}
+          // defaultValue={query}
+          // onChange={handleChangeQuery}
         />
       </div>
       {loading && (
